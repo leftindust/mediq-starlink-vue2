@@ -55,8 +55,10 @@ async function createWindow() {
 
 
   // Setup menu bar webContents
-  (Menu.getApplicationMenu() as any).getMenuItemById('preferences').click = () => {
-    win.webContents.send('preferences')
+  if (isMac) {
+    Menu.getApplicationMenu()!.getMenuItemById('preferences').click = () => {
+      win.webContents.send('preferences')
+    }
   }
 
 
