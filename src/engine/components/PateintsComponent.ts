@@ -26,7 +26,7 @@ export class PatientsComponent extends AbstractCollectionComponent<Patient> {
         }
         `
         const result = await this.client.makeRequest(query)
-        return result.data
+        return result.data.patients
     }
 
 }

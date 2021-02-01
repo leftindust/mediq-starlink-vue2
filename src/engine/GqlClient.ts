@@ -11,7 +11,7 @@ export class Client {
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'mediq-auth-token': `${firebase.auth().currentUser?.getIdToken()}`
+                'mediq-auth-token': `${await firebase.auth().currentUser?.getIdToken()}`
             },
             body: JSON.stringify({query: print(query)})
         });

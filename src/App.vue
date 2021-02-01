@@ -158,7 +158,7 @@
         <template #fixed>
           <AppBar view="main" root>
             <template #left>
-              <NavButton subtitle="Run" onclick="evaluate()">
+              <NavButton subtitle="Run" @click.native="evaluate">
                 <f7-icon color="blue" ios="f7:play_fill"></f7-icon>
               </NavButton>
               <NavButton subtitle="Save"
@@ -332,12 +332,18 @@ export default Vue.extend({
         engine.register(c);
       });
 
-      this.editor.on("process connectioncreated connectionremoved", async () => {
-        if (this.editor.silent) return;
+      function processRete() {
 
-        await engine.abort();
-        await engine.process(this.editor.toJSON());
-      });
+        return async () => {
+          if (this.editor.silent) return;
+
+          await engine.abort();
+          await engine.process(this.editor.toJSON());
+        };
+      }
+      this.controller.onEval = processRete.call(this)
+
+      this.editor.on("process connectioncreated connectionremoved", processRete.call(this));
 
       this.editor.view.resize();
       this.openModule("index.flowmodule").then(() => {

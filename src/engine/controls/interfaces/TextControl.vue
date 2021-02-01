@@ -1,10 +1,10 @@
 <template>
   <input
-    :type="type || 'text'"
-    :readonly="readonly"
-    :value="value"
-    @input="onChange($event)"
-    @mousedown.stop
+      :type="type || 'text'"
+      :readonly="readonly"
+      :value="value"
+      @input="onChange($event)"
+      @mousedown.stop
   />
 </template>
 
@@ -20,6 +20,11 @@ export default {
     "getData",
     "putData",
   ],
+  data() {
+    return {
+      value: undefined
+    }
+  },
   methods: {
     parse(value) {
       return this.type === "number" ? +value : value;
