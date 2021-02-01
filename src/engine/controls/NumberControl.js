@@ -1,7 +1,8 @@
 import Rete from "rete";
 import NumberController from "./interfaces/NumberControl.vue";
+import {StarlinkControl} from "@/engine/controls/StarlinkControl";
 
-export class NumberControl extends Rete.Control {
+export class NumberControl extends StarlinkControl {
     constructor(emitter, ikey, readonly = false, change = () => this.onChange()) {
         super(ikey);
         this.render = 'vue';
@@ -16,7 +17,6 @@ export class NumberControl extends Rete.Control {
 
     setValue(value) {
         const ctx = this.vueContext || this.props;
-
         ctx.value = value;
     }
 

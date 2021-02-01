@@ -2,17 +2,17 @@
   <div>
     <div v-if="!readonly">
       <f7-stepper
-        fill
-        raised
-        :value="value"
-        :min="0"
-        :step="1"
-        @stepper:change="onChange"
-        :autorepeat="true"
-        :wraps="true"
-        :manual-input-mode="true"
-        :decimal-point="0"
-        @mousedown.stop
+          fill
+          raised
+          :value="value"
+          :min="0"
+          :step="1"
+          @stepper:change="onChange"
+          :autorepeat="true"
+          :wraps="true"
+          :manual-input-mode="true"
+          :decimal-point="0"
+          @mousedown.stop
       ></f7-stepper>
     </div>
     <div v-else>
@@ -29,6 +29,7 @@ export default {
     "emitter",
     "ikey",
     "type",
+    "collection",
     "change",
     "getData",
     "putData",

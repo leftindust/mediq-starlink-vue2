@@ -10,7 +10,7 @@ if (fs.existsSync(path)) {
 export const Config = {
     Firebase: firebase,
     Server: {
-        address: "192.168.0.13",
+        address: "192.168.0.11",
         port: "8080"
     }
 }

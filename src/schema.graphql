@@ -1,0 +1,114 @@
+schema {
+    query: Query
+}
+
+"Directs the executor to include this field or fragment only when the `if` argument is true"
+directive @include(
+    "Included when true."
+    if: Boolean!
+) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Directs the executor to skip this field or fragment when the `if`'argument is true."
+directive @skip(
+    "Skipped when true."
+    if: Boolean!
+) on FIELD | FRAGMENT_SPREAD | INLINE_FRAGMENT
+
+"Marks the field or enum value as deprecated"
+directive @deprecated(
+    "The reason for the deprecation"
+    reason: String = "No longer supported"
+) on FIELD_DEFINITION | ENUM_VALUE
+
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behaviour of this scalar."
+    url: String!
+) on SCALAR
+
+type GraphQLDoctor {
+    address: String
+    cellPhone: String
+    dateOfBirth: Time
+    did: Int!
+    email: String
+    firstName: String
+    lastName: String
+    middleName: String
+    pagerNumber: String
+    patients: [Patient!]!
+    title: String
+    workPhone: String
+}
+
+type IcdCode {
+    code: String!
+}
+
+type IcdEntity {
+    children: [IcdEntity!]
+    definition: String
+    id: IcdCode!
+    inclusion: [String]
+    parents: [IcdEntity!]
+    synonyms: [String!]
+    title: String!
+}
+
+type IcdSearchResult {
+    results: [IcdEntity!]!
+    shortened: Boolean!
+    uniqueSearchId: String!
+    wordSuggestionsChopped: Boolean!
+}
+
+type Patient {
+    address: String
+    cellPhone: String
+    dateOfBirth: Time
+    doctors: [GraphQLDoctor!]!
+    email: String
+    firstName: String
+    lastName: String
+    middleName: String
+    pid: Int!
+    workPhone: String
+}
+
+type PatientGroupedList {
+    groups: [PatientLabeledGroup!]!
+}
+
+type PatientLabeledGroup {
+    contents: [Patient!]!
+    groupName: String!
+}
+
+type Query {
+    findIcdDetails(icdCode: String!): IcdEntity!
+    getVisitsByPatient(pid: Int!): [Visit!]!
+    patient(pid: Int!): Patient!
+    patients(from: Int!, sortedBy: SortableField!, to: Int!): [Patient!]!
+    patientsByPids(pids: [Int!]!): [Patient!]!
+    patientsGrouped(from: Int!, sortedBy: SortableField!, to: Int!): PatientGroupedList!
+    searchIcd(query: String!): IcdSearchResult!
+    searchPatientsByName(query: String!): [Patient!]!
+}
+
+type Time {
+    unixTime: String!
+}
+
+type Visit {
+    doctor: Patient!
+    patient: Patient!
+    timeBooked: Time!
+    timeOfVisit: Time!
+    vid: Int!
+}
+
+enum SortableField {
+    FIRST_NAME
+    LAST_NAME
+    PID
+}

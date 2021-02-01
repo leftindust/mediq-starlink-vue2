@@ -1,8 +1,9 @@
 import Rete from "rete";
-import { NumberControl } from "../controls/NumberControl.js";
-import { NodeData, WorkerInputs, WorkerOutputs } from "rete/types/core/data";
+import {NumberControl} from "../controls/NumberControl.js";
+import {NodeData, WorkerInputs, WorkerOutputs} from "rete/types/core/data";
 
 import * as Socket from "../sockets";
+import {StarlinkControl} from "@/engine/controls/StarlinkControl";
 
 export class NumberComponent extends Rete.Component {
     constructor() {
@@ -17,5 +18,12 @@ export class NumberComponent extends Rete.Component {
 
     worker(node: NodeData, inputs: WorkerInputs, outputs: WorkerOutputs) {
         outputs["number"] = node.data.number;
+
+
+        (this.editor
+            ?.nodes
+            ?.find(n => n.id == node.id)
+            ?.controls.get("number") as StarlinkControl)
+            ?.setValue(node.data.number)
     }
 }
