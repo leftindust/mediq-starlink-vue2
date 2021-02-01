@@ -215,6 +215,7 @@ import SideBarButton from "./components/interface/InterfaceSideBarButton.vue";
 import BoxedMedia from "./components/interface/InterfaceBoxedMedia.vue";
 import {PatientsComponent} from "@/engine/components/PateintsComponent";
 import {LazyController} from "@/engine/LazyController";
+import {StatisticsComponent} from "@/engine/components/StatisticsComponent";
 
 export default Vue.extend({
   components: {
@@ -296,7 +297,7 @@ export default Vue.extend({
 
       const container = document.querySelector("#rete");
 
-      const components = [new NumberComponent(), new MathComponent(), new PatientsComponent(this.controller)];
+      const components = [new NumberComponent(), new MathComponent(), new PatientsComponent(this.controller), new StatisticsComponent()];
 
       this.editor = new Rete.NodeEditor("starlink@0.0.1", container);
       this.editor.use(ConnectionPlugin, {curvature: 0.4});
