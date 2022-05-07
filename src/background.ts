@@ -3,8 +3,7 @@
 import { app, protocol, BrowserWindow, ipcMain, Menu } from "electron";
 import { createProtocol } from "vue-cli-plugin-electron-builder/lib";
 import installExtension, { VUEJS_DEVTOOLS } from "electron-devtools-installer";
-import * as os from "os";
-import macosRelease from "macos-release";
+import * as remoteMain from '@electron/remote/main';
 
 const isDevelopment = process.env.NODE_ENV !== "production";
 const isMac = process.platform === "darwin";
@@ -25,20 +24,22 @@ async function createWindow() {
     transparent: true,
     vibrancy: "ultra-dark",
     titleBarStyle:
-      isMac && macosRelease(os.release()).name == "Big Sur"
+      isMac
         ? "hidden"
         : "hiddenInset",
-    trafficLightPosition: { x: 19, y: 35 },
+    trafficLightPosition: { x: 19, y: 20 },
     frame: true,
     webPreferences: {
       zoomFactor: 0.9,
       enableRemoteModule: true,
       // Use pluginOptions.nodeIntegration, leave this alone
       // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-      nodeIntegration: (process.env
-        .ELECTRON_NODE_INTEGRATION as unknown) as boolean
+      nodeIntegration: true,
+      contextIsolation: false,
     }
   });
+
+  remoteMain.enable(win.webContents);
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
@@ -217,7 +218,7 @@ app.on("ready", async () => {
         {
           label: "Learn More",
           click: async () => {
-            const { shell } = require("electron");
+            const { shell } = await import('electron');
             await shell.openExternal("https://electronjs.org");
           }
         }

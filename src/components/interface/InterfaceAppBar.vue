@@ -21,9 +21,6 @@ import { f7 } from "framework7-vue";
 
 import Vue from "vue";
 
-import { remote } from "electron";
-const win = remote.getCurrentWindow();
-
 export default Vue.extend({
   name: "AppBar",
   props: {
@@ -49,15 +46,6 @@ export default Vue.extend({
 
     f7.$(document).on("panel:close", ".panel-right", () => {
       this.spacing = false;
-    });
-
-    // Change fullscreen state
-    win.on("enter-full-screen", () => {
-      this.fullscreen = true;
-    });
-
-    win.on("leave-full-screen", () => {
-      this.fullscreen = false;
     });
   },
 });

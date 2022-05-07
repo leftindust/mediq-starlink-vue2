@@ -21,9 +21,8 @@ import { f7 } from "framework7-vue";
 import firebase from "firebase/app";
 import "firebase/auth";
 
-import electron, { remote } from "electron";
-const { dialog } = electron.remote;
-const win = remote.getCurrentWindow();
+import electron from "electron";
+import remote from "@electron/remote";
 
 // Init F7-Vue Plugin
 Framework7.use(Framework7Vue);
@@ -103,7 +102,6 @@ new Vue({
                         "Incorrect email or password. You can reset your password by contacting your administrator",
                       defaultId: 0,
                     };
-                    console.log(dialog.showMessageBox(win, options));
                   });
               })
               .catch(function (error) {
@@ -117,7 +115,6 @@ new Vue({
               detail: "Please enter a valid email and password",
               defaultId: 0,
             };
-            console.log(dialog.showMessageBox(win, options));
           }
         },
         signOut: () => {

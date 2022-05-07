@@ -13,8 +13,7 @@
 
 <script lang="ts">
 import { f7 } from "framework7-vue";
-import { remote } from "electron";
-const win = remote.getCurrentWindow();
+import remote from "@electron/remote";
 
 import NavButton from "./InterfaceNavButton.vue";
 
@@ -27,16 +26,6 @@ export default {
     return {
       fullscreen: false,
     };
-  },
-  mounted() {
-    // Change fullscreen state
-    win.on("enter-full-screen", () => {
-      this.fullscreen = true;
-    });
-
-    win.on("leave-full-screen", () => {
-      this.fullscreen = false;
-    });
   },
   methods: {
     toggle() {
