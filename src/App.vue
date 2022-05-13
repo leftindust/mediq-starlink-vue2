@@ -363,14 +363,7 @@ export default Vue.extend({
     // Theme initialization
     f7ready(() => {
       f7.$("html").addClass("theme-dark");
-      //Check if $root.user logged in
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          this.$root.initialize();
-        } else {
-          f7.loginScreen.open(".login-screen");
-        }
-      });
+      this.$root.initialize();
     });
   },
 });
